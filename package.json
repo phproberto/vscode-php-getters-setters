@@ -1,0 +1,113 @@
+{
+    "name": "vscode-php-getters-setters",
+    "displayName": "vscode-php-getters-setters",
+    "description": "Create PHP getters and setters from class properties",
+    "version": "1.0.0",
+    "publisher": "phproberto",
+    "author": "Roberto Segura <roberto@phproberto.com>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/phproberto/vscode-php-getters-setters"
+    },
+    "bugs": {
+        "url": "https://github.com/phproberto/vscode-php-getters-setters/issues"
+    },
+    "icon": "images/icon.png",
+    "engines": {
+        "vscode": "^1.18.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "keywords": [
+        "php",
+        "getter",
+        "getters",
+        "setter",
+        "setters"
+    ],
+    "activationEvents": [
+        "onLanguage:php",
+        "onCommand:phpGettersSetters.insertGetter",
+        "onCommand:phpGettersSetters.insertSetter",
+        "onCommand:phpGettersSetters.insertGetterAndSetter"
+    ],
+    "main": "./out/extension",
+    "contributes": {
+        "configuration": {
+            "type": "object",
+            "title": "PHP getters & setters configuration",
+            "properties": {
+                "phpGettersSetters.redirect": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Redirect to generated functions after creating them?"
+                },
+                "phpGettersSetters.spacesAfterParam": {
+                    "type": "integer",
+                    "default": 2,
+                    "description": "How many spaces should we add after a @param tag?"
+                },
+                "phpGettersSetters.spacesAfterParamVar": {
+                    "type": "integer",
+                    "default": 2,
+                    "description": "How many spaces should we add after a @param variable name?"
+                },
+                "phpGettersSetters.spacesAfterReturn": {
+                    "type": "integer",
+                    "default": 2,
+                    "description": "How many spaces should we add after a @return tag?"
+                }
+            }
+        },
+        "commands": [
+            {
+                "command": "phpGettersSetters.insertGetter",
+                "title": "Insert PHP Getter"
+            },
+            {
+                "command": "phpGettersSetters.insertSetter",
+                "title": "Insert PHP Setter"
+            },
+            {
+                "command": "phpGettersSetters.insertGetterAndSetter",
+                "title": "Insert PHP Getter & Setter"
+            }
+        ],
+        "menus": {
+            "commandPalette": [
+                {
+                    "command": "phpGettersSetters.insertGetter",
+                    "when": "editorLangId == php"
+                },
+                {
+                    "command": "phpGettersSetters.insertSetter",
+                    "when": "editorLangId == php"
+                },
+                {
+                    "command": "phpGettersSetters.insertGetterAndSetter",
+                    "when": "editorLangId == php"
+                }
+            ]
+        },
+        "snippets": [
+            {
+            "language": "php",
+            "path": "./src/snippets/php.json"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.6",
+        "@types/node": "^7.0.43",
+        "@types/mocha": "^2.2.42"
+    }
+}
