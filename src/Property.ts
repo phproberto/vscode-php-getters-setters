@@ -134,7 +134,7 @@ export default class Property {
     }
 
     isValidTypeHint(type : string) {
-        return (-1 !== type.indexOf('|') && -1 === this.pseudoTypes.indexOf(type));
+        return (-1 === type.indexOf('|') && -1 === this.pseudoTypes.indexOf(type));
     }
 
     setterDescription() : string {
