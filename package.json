@@ -89,13 +89,7 @@
                     "when": "editorLangId == php"
                 }
             ]
-        },
-        "snippets": [
-            {
-            "language": "php",
-            "path": "./src/snippets/php.json"
-            }
-        ]
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
