@@ -23,7 +23,7 @@ It adds 3 comands to vscode's command palette:
 
 You can also access commands from contextual menu when clicking on a class property:
 
-![Contexttual menu](images/context-menu)
+![Contexttual menu](images/context-menu.jpg)
 
 ## Extension Settings
 
