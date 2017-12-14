@@ -88,6 +88,26 @@
                     "command": "phpGettersSetters.insertGetterAndSetter",
                     "when": "editorLangId == php"
                 }
+            ],
+            "editor/context": [
+                {
+                    "when": "resourceLangId == php",
+                    "command": "phpGettersSetters.insertGetter",
+                    "alt": "phpGettersSetters.insertGetter",
+                    "group": "0_phpGettersSetters@1"
+                },
+                {
+                    "when": "resourceLangId == php",
+                    "command": "phpGettersSetters.insertSetter",
+                    "alt": "phpGettersSetters.insertSetter",
+                    "group": "0_phpGettersSetters@2"
+                },
+                {
+                    "when": "resourceLangId == php",
+                    "command": "phpGettersSetters.insertGetterAndSetter",
+                    "alt": "phpGettersSetters.insertGetterAndSetter",
+                    "group": "0_phpGettersSetters@3"
+                }
             ]
         }
     },
