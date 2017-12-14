@@ -2,7 +2,7 @@
     "name": "vscode-php-getters-setters",
     "displayName": "PHP Getters & Setters",
     "description": "Create PHP getters and setters from class properties",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "publisher": "phproberto",
     "author": "Roberto Segura <roberto@phproberto.com>",
     "repository": {
