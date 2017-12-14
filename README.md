@@ -21,6 +21,10 @@ It adds 3 comands to vscode's command palette:
 * Insert PHP setter.
 * Insert PHP getter and setter.
 
+You can also access commands from contextual menu when clicking on a class property:
+
+![Contexttual menu](images/context-menu)
+
 ## Extension Settings
 
 This extension contributes the following settings:
@@ -32,8 +36,12 @@ This extension contributes the following settings:
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+Relevant releases:
+
+### 1.0.3
+
+* Added context menu links
 
 ### 1.0.0
 
-Initial version
+* Initial version
