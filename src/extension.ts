@@ -7,27 +7,33 @@ import Configuration from "./Configuration";
 
 class Resolver {
     config: Configuration;
-    editor: vscode.TextEditor;
 
     /**
      * Types that won't be recognised as valid type hints
      */
     pseudoTypes = ['mixed', 'number', 'callback', 'object', 'void'];
 
-    public constructor(editor?: vscode.TextEditor)
+    public constructor()
     {
-        this.editor = editor ? editor : vscode.window.activeTextEditor;
+        const editor = this.activeEditor();
 
-        if (this.editor.document.languageId !== 'php') {
+        if (editor.document.languageId !== 'php') {
             throw new Error('Not a PHP file.');
         }
 
         this.config = new Configuration;
     }
 
+
+    activeEditor() {
+        return vscode.window.activeTextEditor;
+    }
+
     closingClassLine() {
-        for (let lineNumber = this.editor.document.lineCount - 1; lineNumber > 0; lineNumber--) {
-            const line = this.editor.document.lineAt(lineNumber);
+        const editor = this.activeEditor();
+
+        for (let lineNumber = editor.document.lineCount - 1; lineNumber > 0; lineNumber--) {
+            const line = editor.document.lineAt(lineNumber);
             const text = line.text;
 
             if (text.startsWith('}')) {
@@ -51,10 +57,11 @@ class Resolver {
     }
 
     getterTemplate() {
+        const editor = this.activeEditor();
         let prop = null;
 
         try {
-            prop = Property.fromEditorSelection(this.editor);
+            prop = Property.fromEditorSelection(editor);
         } catch (error) {
             vscode.window.showErrorMessage(error.message);
             return null;
@@ -81,10 +88,11 @@ class Resolver {
     }
 
     setterTemplate() {
+        const editor = this.activeEditor();
         let prop = null;
 
         try {
-            prop = Property.fromEditorSelection(this.editor);
+            prop = Property.fromEditorSelection(editor);
         } catch (error) {
             vscode.window.showErrorMessage(error.message);
             return null;
@@ -128,9 +136,10 @@ class Resolver {
             return;
         }
 
+        const editor = this.activeEditor();
         let resolver = this;
 
-        this.editor.edit(function(edit: vscode.TextEditorEdit){
+        editor.edit(function(edit: vscode.TextEditorEdit){
             edit.replace(
                 new vscode.Position(insertLine.lineNumber, 0),
                 template
@@ -138,7 +147,7 @@ class Resolver {
         }).then(
             success => {
                 if (resolver.isRedirectEnabled() && success) {
-                    const redirector = new Redirector(this.editor);
+                    const redirector = new Redirector(editor);
                     redirector.goToLine(this.closingClassLine().lineNumber - 1);
                 }
             },
