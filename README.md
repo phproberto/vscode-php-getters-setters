@@ -38,6 +38,9 @@ This extension contributes the following settings:
 
 Relevant releases:
 
+### 1.0.5
+* Fixed `No property found` when switching between editors. Thanks for reporting Carlos Alfonso Pérez Rivera!
+
 ### 1.0.3
 
 * Added context menu links
