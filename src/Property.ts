@@ -16,8 +16,7 @@ export default class Property {
         this.name = name;
     }
 
-    static fromEditorSelection(editor: vscode.TextEditor) {
-        const activePosition = editor.selection.active;
+    static fromEditorPosition(editor: vscode.TextEditor, activePosition: vscode.Position) {
         const wordRange = editor.document.getWordRangeAtPosition(activePosition);
 
         if (wordRange === undefined) {
@@ -91,6 +90,10 @@ export default class Property {
         }
 
         return property;
+    }
+
+    static fromEditorSelection(editor: vscode.TextEditor) {
+        return Property.fromEditorPosition(editor, editor.selection.active);
     }
 
     generateMethodDescription(prefix : string) : string {

@@ -45,28 +45,69 @@ class Resolver {
     }
 
     insertGetter() {
-        this.renderTemplate(this.getterTemplate());
+        const editor = this.activeEditor();
+        let property = null;
+        let content = '';
+
+        for (let index = 0; index < editor.selections.length; index++) {
+            const selection = editor.selections[index];
+
+            try {
+                property = Property.fromEditorPosition(editor, selection.active);
+            } catch (error) {
+                this.showErrorMessage(error.message);
+                return null;
+            }
+
+            content += this.getterTemplate(property);
+        }
+
+        this.renderTemplate(content);
     }
 
     insertGetterAndSetter(){
-        this.renderTemplate(this.getterTemplate() + this.setterTemplate());
+        const editor = this.activeEditor();
+        let property = null;
+        let content = '';
+
+        for (let index = 0; index < editor.selections.length; index++) {
+            const selection = editor.selections[index];
+
+            try {
+                property = Property.fromEditorPosition(editor, selection.active);
+            } catch (error) {
+                this.showErrorMessage(error.message);
+                return null;
+            }
+
+            content += this.getterTemplate(property) + this.setterTemplate(property);
+        }
+
+        this.renderTemplate(content);
     }
 
     insertSetter() {
-        this.renderTemplate(this.setterTemplate());
-    }
-
-    getterTemplate() {
         const editor = this.activeEditor();
-        let prop = null;
+        let property = null;
+        let content = '';
 
-        try {
-            prop = Property.fromEditorSelection(editor);
-        } catch (error) {
-            this.showErrorMessage(error.message);
-            return null;
+        for (let index = 0; index < editor.selections.length; index++) {
+            const selection = editor.selections[index];
+
+            try {
+                property = Property.fromEditorPosition(editor, selection.active);
+            } catch (error) {
+                this.showErrorMessage(error.message);
+                return null;
+            }
+
+            content += this.setterTemplate(property);
         }
 
+        this.renderTemplate(content);
+    }
+
+    getterTemplate(prop: Property) {
         const name = prop.getName();
         const description = prop.getDescription();
         const tab = prop.getIndentation();
@@ -87,17 +128,7 @@ class Resolver {
         );
     }
 
-    setterTemplate() {
-        const editor = this.activeEditor();
-        let prop = null;
-
-        try {
-            prop = Property.fromEditorSelection(editor);
-        } catch (error) {
-            this.showErrorMessage(error.message);
-            return null;
-        }
-
+    setterTemplate(prop: Property) {
         const name = prop.getName();
         const description = prop.getDescription();
         const tab = prop.getIndentation();
