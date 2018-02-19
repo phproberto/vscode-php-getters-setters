@@ -3,6 +3,9 @@ All notable changes to the "php-getters-setters" extension will be documented in
 
 ## [Unreleased]
 
+## [1.0.7] - 2017-02-19
+- command not found on windows machines. #1
+
 ## [1.0.6] - 2017-02-19
 - Fixed functions not inserted on classes defined in files with indentantion. #1
 
