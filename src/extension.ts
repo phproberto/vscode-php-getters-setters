@@ -34,7 +34,7 @@ class Resolver {
 
         for (let lineNumber = editor.document.lineCount - 1; lineNumber > 0; lineNumber--) {
             const line = editor.document.lineAt(lineNumber);
-            const text = line.text;
+            const text = line.text.trim();
 
             if (text.startsWith('}')) {
                 return line;
@@ -63,7 +63,7 @@ class Resolver {
         try {
             prop = Property.fromEditorSelection(editor);
         } catch (error) {
-            vscode.window.showErrorMessage(error.message);
+            this.showErrorMessage(error.message);
             return null;
         }
 
@@ -94,7 +94,7 @@ class Resolver {
         try {
             prop = Property.fromEditorSelection(editor);
         } catch (error) {
-            vscode.window.showErrorMessage(error.message);
+            this.showErrorMessage(error.message);
             return null;
         }
 
@@ -127,12 +127,14 @@ class Resolver {
 
     renderTemplate(template: string) {
         if (!template) {
+            this.showErrorMessage('Missing template to render.');
             return;
         }
 
         let insertLine = this.insertLine();
 
         if (!insertLine) {
+            this.showErrorMessage('Unable to detect insert line for template.');
             return;
         }
 
@@ -152,7 +154,7 @@ class Resolver {
                 }
             },
             error => {
-                vscode.window.showErrorMessage(`Error generating functions: ` + error);
+                this.showErrorMessage(`Error generating functions: ` + error);
             }
         );
     }
@@ -163,6 +165,18 @@ class Resolver {
 
     isRedirectEnabled() : boolean {
         return true === this.config.get('redirect', true);
+    }
+
+    showErrorMessage(message: string) {
+        message = 'phpGettersSetters error: ' + message.replace(/\$\(.+?\)\s\s/, '');
+
+        vscode.window.showErrorMessage(message);
+    }
+
+    showInformationMessage(message: string) {
+        message = 'phpGettersSetters info: ' + message.replace(/\$\(.+?\)\s\s/, '');
+
+        vscode.window.showInformationMessage(message);
     }
 }
 
