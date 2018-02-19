@@ -3,6 +3,9 @@ All notable changes to the "php-getters-setters" extension will be documented in
 
 ## [Unreleased]
 
+## [1.1.0] - 2017-02-19
+- Add multiple cursor support. Issue #4
+
 ## [1.0.7] - 2017-02-19
 - command not found on windows machines. #1
 
