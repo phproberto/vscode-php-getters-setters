@@ -4,9 +4,11 @@ import * as vscode from 'vscode';
 import Redirector from "./Redirector";
 import Property from "./Property";
 import Configuration from "./Configuration";
+import TemplatesManager from './TemplatesManager';
 
 class Resolver {
     config: Configuration;
+    templatesManager: TemplatesManager;
 
     /**
      * Types that won't be recognised as valid type hints
@@ -22,6 +24,7 @@ class Resolver {
         }
 
         this.config = new Configuration;
+        this.templatesManager = new TemplatesManager;
     }
 
 
@@ -113,6 +116,13 @@ class Resolver {
         const tab = prop.getIndentation();
         const type = prop.getType();
         const spacesAfterReturn = Array(this.config.getInt('spacesAfterReturn', 2) + 1).join(' ');
+        const templateFile = this.config.get('getterTemplate', 'getter.js');
+
+        if (this.templatesManager.exists(templateFile)) {
+            const template = require(this.templatesManager.path(templateFile));
+
+            return template(prop);
+        }
 
         return  (
             `\n`
@@ -137,6 +147,14 @@ class Resolver {
         const spacesAfterParam = Array(this.config.getInt('spacesAfterParam', 2) + 1).join(' ');
         const spacesAfterParamVar = Array(this.config.getInt('spacesAfterParamVar', 2) + 1).join(' ');
         const spacesAfterReturn = Array(this.config.getInt('spacesAfterReturn', 2) + 1).join(' ');
+
+        const templateFile = this.config.get('setterTemplate', 'setter.js');
+
+        if (this.templatesManager.exists(templateFile)) {
+            const template = require(this.templatesManager.path(templateFile));
+
+            return template(prop);
+        }
 
         return (
             `\n`

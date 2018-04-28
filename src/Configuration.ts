@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 
 export default class Configuration {
     private config : vscode.WorkspaceConfiguration;
+
     public constructor()
     {
         this.config = vscode.workspace.getConfiguration('phpGettersSetters');

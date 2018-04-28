@@ -57,6 +57,21 @@
                     "type": "integer",
                     "default": 2,
                     "description": "How many spaces should we add after a @return tag?"
+                },
+                "phpGettersSetters.templatesDir": {
+                    "type": "string",
+                    "default": null,
+                    "description": "Folder where your templates are"
+                },
+                "phpGettersSetters.getterTemplate": {
+                    "type": "string",
+                    "default": "getter.js",
+                    "description": "Template for getters"
+                },
+                "phpGettersSetters.setterTemplate": {
+                    "type": "string",
+                    "default": "setter.js",
+                    "description": "Template for setters"
                 }
             }
         },
