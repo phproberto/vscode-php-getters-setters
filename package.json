@@ -61,17 +61,17 @@
                 "phpGettersSetters.templatesDir": {
                     "type": "string",
                     "default": null,
-                    "description": "Folder where your templates are"
+                    "description": "Folder where custom templates are stored"
                 },
                 "phpGettersSetters.getterTemplate": {
                     "type": "string",
                     "default": "getter.js",
-                    "description": "Template for getters"
+                    "description": "File to use as template for getters"
                 },
                 "phpGettersSetters.setterTemplate": {
                     "type": "string",
                     "default": "setter.js",
-                    "description": "Template for setters"
+                    "description": "File to use as template for setters"
                 }
             }
         },

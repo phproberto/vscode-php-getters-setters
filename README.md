@@ -33,6 +33,59 @@ This extension contributes the following settings:
 * `phpGettersSetters.spacesAfterParamVar`: Number of spaces to insert after the variable name in the @param tag line. Default: 2
 * `phpGettersSetters.spacesAfterReturn`: Number of spaces to insert after the @return tag. Default: 2
 * `phpGettersSetters.redirect`: Redirect editor to generated functions after generating them? Default: true
+* `phpGettersSetters.templatesDir`: Folder where custom templates are stored
+* `phpGettersSetters.getterTemplate`: File to use as template for getters. Default: getter.js
+* `phpGettersSetters.setterTemplate`: File to use as template for setters. Default :setter.js
+
+## Custom Templates
+
+By default this extension will use a custom function to generate your getters & setters but you can fully customise the markup used to generate them. By default templates are stored in:
+
+* Linux: `~/.config/Code/User/phpGettersSetters`
+* OSX: `~/Library/Application Support/Code/User/phpGettersSetters`
+* Windows: `Users\{User}\AppData\Roaming\Code\User\phpGettersSetters`
+
+You can also set a custom templates dir entering a custom folder in `phpGettersSetters.templatesDir` setting.
+
+Template Literals are used for templating because the flexibility they provide. With them you can easily create a custom template with no knowledge and also invest some time for complex things. For advanced usage you will have to google about template literals but here are 2 sample templates.
+
+Sample getter.js template:
+
+```
+module.exports = (property) => `
+    /**
+     * ${property.getterDescription()}
+     *
+     * @return  ${property.getType()}
+     */
+    public function ${property.getterName()}()
+    {
+        return $this->${property.getName()};
+    }
+`
+```
+
+Sample setter.js template:
+
+```
+module.exports = (property) => `
+    /**
+     * ${property.setterDescription()}
+     *
+     * @param   ${property.getType()}  \$${property.getName()}  ${property.getDescription()}
+     *
+     * @return  self
+     */
+    public function ${property.setterName()}(${property.getTypeHint()} \$${property.getName()})
+    {
+        $this->${property.getName()} = \$${property.getName()};
+
+        return $this;
+    }
+`
+```
+
+As you can see a [Property](blob/master/src/Property.ts) object is passed to templates so you can access any public method there. I also like the idea of adding more stuff as users find limits. Open an issue if you find something you cannot achieve.
 
 ## Release Notes
 
