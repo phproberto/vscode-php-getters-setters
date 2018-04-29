@@ -3,13 +3,16 @@ All notable changes to the "php-getters-setters" extension will be documented in
 
 ## [Unreleased]
 
-## [1.1.0] - 2017-02-19
+## [1.2.0] - 2017-04-29
+- Added support for custom templates. See #3, #10, #11
+
+## [1.1.0] - 2018-02-19
 - Add multiple cursor support. Issue #4
 
-## [1.0.7] - 2017-02-19
+## [1.0.7] - 2018-02-19
 - command not found on windows machines. #1
 
-## [1.0.6] - 2017-02-19
+## [1.0.6] - 2018-02-19
 - Fixed functions not inserted on classes defined in files with indentantion. #1
 
 ## [1.0.5] - 2017-12-21

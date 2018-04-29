@@ -91,6 +91,9 @@ As you can see a [Property](blob/master/src/Property.ts) object is passed to tem
 
 Relevant releases:
 
+### 1.2.0
+* Added support for custom templates
+
 ### 1.1.0
 * Added support for multiple cursor
 
