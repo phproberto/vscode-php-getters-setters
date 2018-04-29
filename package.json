@@ -5,6 +5,7 @@
     "version": "1.2.0",
     "publisher": "phproberto",
     "author": "Roberto Segura <roberto@phproberto.com>",
+    "license": "MIT",
     "repository": {
         "type": "git",
         "url": "https://github.com/phproberto/vscode-php-getters-setters"
