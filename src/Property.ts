@@ -7,9 +7,9 @@ export default class Property {
     private description: string = null;
     private indentation: string;
     private name: string;
-    private type: string;
+    private type: string = null;
     private typeHint: string = null;
-    private pseudoTypes = ['mixed', 'number', 'callback', 'array|object', 'void'];
+    private pseudoTypes = ['mixed', 'number', 'callback', 'array|object', 'void', 'null', 'integer'];
 
     public constructor(name: string)
     {
