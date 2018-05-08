@@ -53,15 +53,15 @@ Sample getter.js template:
 
 ```
 module.exports = (property) => `
-    /**
-     * ${property.getterDescription()}
-     *
-     * @return  ${property.getType()}
-     */
-    public function ${property.getterName()}()
-    {
-        return $this->${property.getName()};
-    }
+	/**
+	 * ${property.getterDescription()}
+	 *
+	 * @return  ${property.getType() ? property.getType() : 'mixed'}
+	 */
+	public function ${property.getterName()}()
+	{
+		return $this->${property.getName()};
+	}
 `
 ```
 
@@ -69,19 +69,19 @@ Sample setter.js template:
 
 ```
 module.exports = (property) => `
-    /**
-     * ${property.setterDescription()}
-     *
-     * @param   ${property.getType()}  \$${property.getName()}  ${property.getDescription()}
-     *
-     * @return  self
-     */
-    public function ${property.setterName()}(${property.getTypeHint()} \$${property.getName()})
-    {
-        $this->${property.getName()} = \$${property.getName()};
+	/**
+	 * ${property.setterDescription()}
+	 *
+	 * @param   ${property.getType() ? property.getType() : 'mixed'}  \$${property.getName()}  ${property.getDescription() ? property.getDescription() : ''}
+	 *
+	 * @return  self
+	 */
+	public function ${property.setterName()}(${property.getTypeHint() ? property.getTypeHint() + ' ' : '' }\$${property.getName()})
+	{
+		$this->${property.getName()} = \$${property.getName()};
 
-        return $this;
-    }
+		return $this;
+	}
 `
 ```
 
