@@ -130,7 +130,7 @@ class Resolver {
             + tab + ` * ` + prop.getterDescription() + `\n`
             + (type ? tab + ` *\n` : ``)
             + (type ? tab + ` * @return` + spacesAfterReturn + type + `\n` : ``)
-            + tab + ` */ \n`
+            + tab + ` */\n`
             + tab + `public function ` + prop.getterName() + `()\n`
             + tab + `{\n`
             + tab + tab + `return $this->` + name + `;\n`
@@ -164,7 +164,7 @@ class Resolver {
             + (type ? tab + ` * @param` + spacesAfterParam + type + spacesAfterParamVar + `$` + name + (description ? `  ` + description : ``) + `\n` : ``)
             + tab + ` *\n`
             + tab + ` * @return` + spacesAfterReturn + `self\n`
-            + tab + ` */ \n`
+            + tab + ` */\n`
             + tab + `public function ` + prop.setterName() + `(` + (typeHint ? typeHint + ` ` : ``) + `$` + name + `)\n`
             + tab+ `{\n`
             + tab + tab + `$this->` + name + ` = $` + name + `;\n`
