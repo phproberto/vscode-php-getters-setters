@@ -43,7 +43,7 @@ By default this extension will use a custom function to generate your getters & 
 
 * Linux: `~/.config/Code/User/phpGettersSetters`
 * OSX: `~/Library/Application Support/Code/User/phpGettersSetters`
-* Windows: `Users\{User}\AppData\Roaming\Code\User\phpGettersSetters`
+* Windows: `%APPDATA%\Code\User\phpGettersSetters`
 
 You can also set a custom templates dir entering a custom folder in `phpGettersSetters.templatesDir` setting.
 
