@@ -60,7 +60,10 @@
                     "description": "How many spaces should we add after a @return tag?"
                 },
                 "phpGettersSetters.templatesDir": {
-                    "type": ["string", "null"],
+                    "type": [
+                        "string",
+                        "null"
+                    ],
                     "default": null,
                     "description": "Folder where custom templates are stored"
                 },
@@ -136,7 +139,7 @@
     },
     "devDependencies": {
         "typescript": "^2.6.1",
-        "vscode": "^1.1.6",
+        "vscode": "^1.1.35",
         "@types/node": "^7.0.43",
         "@types/mocha": "^2.2.42"
     }
