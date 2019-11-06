@@ -150,6 +150,10 @@ export default class Property {
 
     setType(type : string) {
         this.type = type;
+        
+        if (type.indexOf('[]') > 0) {
+            type = 'array';
+        }
 
         if (this.isValidTypeHint(type)) {
             this.typeHint = type;
