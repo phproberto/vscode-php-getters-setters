@@ -49,16 +49,16 @@ export default class Property {
             return property;
         }
 
+        let multilineDescription = [];
         for (let line = previousLineNumber - 1; line > 0; line--) {
-            // Everything found
-            if (property.name && property.type && property.description) {
-                break;
-            }
-
             const text = editor.document.lineAt(line).text;
 
             // Reached the end of the doc block
             if (text.includes('/**') || !text.includes('*')) {
+                if (!property.description && multilineDescription.length > 0) {
+                    property.description = property.stringifyMultilineDescription(multilineDescription);
+                }
+
                 break;
             }
 
@@ -70,7 +70,7 @@ export default class Property {
             const varPosition = lineParts.indexOf('@var');
 
             // Found @var line
-            if (-1 !== varPosition) {
+            if (varPosition !== -1) {
                 property.setType(lineParts[varPosition + 1]);
 
                 var descriptionParts = lineParts.slice(varPosition + 2);
@@ -82,10 +82,9 @@ export default class Property {
                 continue;
             }
 
-            const posibleDescription = lineParts.join(` `);
-
-            if (posibleDescription[0] !== '@') {
-                property.description = posibleDescription;
+            let possibleDescription = lineParts.join(` `);
+            if (possibleDescription[0] !== '@') {
+                multilineDescription = [text, ...multilineDescription];
             }
         }
 
@@ -154,5 +153,24 @@ export default class Property {
         if (this.isValidTypeHint(type)) {
             this.typeHint = type;
         }
+    }
+
+    stringifyMultilineDescription(multilineDescription: string[]): string {
+        const leftTrimLine = (line: string) => line.replace(/^\s*\*\s*/, '');
+        // remove the `    * ` from the first description line.
+        multilineDescription[0] = leftTrimLine(multilineDescription[0]);
+
+        // it can be a single line description too !
+        if (multilineDescription.length === 1) {
+            return multilineDescription[0];
+        }
+
+        // remove the last line if it's empty
+        const lastLine = leftTrimLine(multilineDescription[multilineDescription.length -1]);
+        if (lastLine === '') {
+            multilineDescription = multilineDescription.slice(0, -1);
+        }
+
+        return multilineDescription.join("\n");
     }
 }
