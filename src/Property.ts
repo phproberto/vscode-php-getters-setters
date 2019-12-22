@@ -104,7 +104,11 @@ export default class Property {
     }
 
     generateMethodName(prefix : string) : string {
-        return prefix + this.name.charAt(0).toUpperCase() + this.name.substring(1);
+        const inflectedPropertyName = (this.name.charAt(0) === '_')
+            ? this.name.charAt(1).toUpperCase() + this.name.substring(2)
+            : this.name.charAt(0).toUpperCase() + this.name.substring(1);
+
+        return prefix + inflectedPropertyName;
     }
 
     getDescription() : string {
