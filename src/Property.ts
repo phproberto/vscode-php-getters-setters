@@ -3,8 +3,12 @@
 
 import * as vscode from 'vscode';
 
+// remove the `   * ` at the begining of the line
+const leftTrimLine = (line: string) => line.replace(/^\s*\*\s*/, '');
+
 export default class Property {
     private description: string = null;
+    private descriptionLines: string[] = [];
     private indentation: string;
     private name: string;
     private type: string = null;
@@ -49,14 +53,13 @@ export default class Property {
             return property;
         }
 
-        let multilineDescription = [];
         for (let line = previousLineNumber - 1; line > 0; line--) {
             const text = editor.document.lineAt(line).text;
 
             // Reached the end of the doc block
             if (text.includes('/**') || !text.includes('*')) {
-                if (!property.description && multilineDescription.length > 0) {
-                    property.description = property.stringifyMultilineDescription(multilineDescription);
+                if (!property.description && property.descriptionLines.length > 0) {
+                    property.description = property.stringifyDescriptionLines();
                 }
 
                 break;
@@ -76,7 +79,8 @@ export default class Property {
                 var descriptionParts = lineParts.slice(varPosition + 2);
 
                 if (descriptionParts.length) {
-                    property.description = descriptionParts.join(` `);
+                    // sync the `description` string with the `descriptionLines` array
+                    property.description = property.descriptionLines[0] = descriptionParts.join(` `);
                 }
 
                 continue;
@@ -84,7 +88,7 @@ export default class Property {
 
             let possibleDescription = lineParts.join(` `);
             if (possibleDescription[0] !== '@') {
-                multilineDescription = [text, ...multilineDescription];
+                property.descriptionLines = [text, ...property.descriptionLines];
             }
         }
 
@@ -113,6 +117,28 @@ export default class Property {
 
     getDescription() : string {
         return this.description;
+    }
+
+    getArgumentDescription(): string|null {
+        const linesCount = this.descriptionLines.length;
+        if (linesCount === 0) {
+            return null;
+        }
+
+        const firstLine = leftTrimLine(this.descriptionLines[0]);
+
+        // single line description
+        if (linesCount === 1) {
+            return firstLine;
+        }
+
+        // multiline description, check if the second line isn't empty
+        const secondLine = leftTrimLine(this.descriptionLines[1]);
+        if (secondLine !== '') {
+            return firstLine + '\n' + this.descriptionLines[1];
+        }
+
+        return firstLine;
     }
 
     getIndentation() : string {
@@ -163,22 +189,25 @@ export default class Property {
         }
     }
 
-    stringifyMultilineDescription(multilineDescription: string[]): string {
-        const leftTrimLine = (line: string) => line.replace(/^\s*\*\s*/, '');
+    stringifyDescriptionLines(): string|null {
+        if (this.descriptionLines.length === 0) {
+            return null;
+        }
+
         // remove the `    * ` from the first description line.
-        multilineDescription[0] = leftTrimLine(multilineDescription[0]);
+        const firstLine = leftTrimLine(this.descriptionLines[0]);
 
         // it can be a single line description too !
-        if (multilineDescription.length === 1) {
-            return multilineDescription[0];
+        if (this.descriptionLines.length === 1) {
+            return firstLine;
         }
 
         // remove the last line if it's empty
-        const lastLine = leftTrimLine(multilineDescription[multilineDescription.length -1]);
-        if (lastLine === '') {
-            multilineDescription = multilineDescription.slice(0, -1);
-        }
+        const lastLine = leftTrimLine(this.descriptionLines[this.descriptionLines.length -1]);
+        const descriptionLines = (lastLine === '') ? this.descriptionLines.slice(0, -1) : this.descriptionLines;
+        // skip the first line, we will use the left trimmed version(without `    * `)
+        const [head, ...tail] = descriptionLines;
 
-        return multilineDescription.join("\n");
+        return firstLine + '\n' + tail.join('\n');
     }
 }
