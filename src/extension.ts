@@ -140,7 +140,8 @@ class Resolver {
 
     setterTemplate(prop: Property) {
         const name = prop.getName();
-        const description = prop.getDescription();
+        const argumentName = prop.getArgumentName();
+        const argumentDescription = prop.getArgumentDescription();
         const tab = prop.getIndentation();
         const type = prop.getType();
         const typeHint = prop.getTypeHint();
@@ -161,13 +162,13 @@ class Resolver {
             + tab + `/**\n`
             + tab + ` * ` + prop.setterDescription() + `\n`
             + (type ? tab + ` *\n` : ``)
-            + (type ? tab + ` * @param` + spacesAfterParam + type + spacesAfterParamVar + `$` + name + (description ? `  ` + description : ``) + `\n` : ``)
+            + (type ? tab + ` * @param` + spacesAfterParam + type + spacesAfterParamVar + `$` + argumentName + (argumentDescription ? `  ` + argumentDescription : ``) + `\n` : ``)
             + tab + ` *\n`
             + tab + ` * @return` + spacesAfterReturn + `self\n`
             + tab + ` */\n`
-            + tab + `public function ` + prop.setterName() + `(` + (typeHint ? typeHint + ` ` : ``) + `$` + name + `)\n`
+            + tab + `public function ` + prop.setterName() + `(` + (typeHint ? typeHint + ` ` : ``) + `$` + argumentName + `)\n`
             + tab+ `{\n`
-            + tab + tab + `$this->` + name + ` = $` + name + `;\n`
+            + tab + tab + `$this->` + name + ` = $` + argumentName + `;\n`
             + `\n`
             + tab + tab + `return $this;\n`
             + tab + `}\n`
