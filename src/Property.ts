@@ -123,6 +123,10 @@ export default class Property {
         return this.name;
     }
 
+    getArgumentName(): string {
+        return this.name.charAt(0) === '_' ? this.name.slice(1) : this.name;
+    }
+
     getterDescription() : string {
         return this.generateMethodDescription('Get ');
     }
