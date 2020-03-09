@@ -33,6 +33,12 @@ export default class Property {
 
         const activeLineNumber = activePosition.line;
         const activeLine = editor.document.lineAt(activeLineNumber);
+        const activeLineTokens = activeLine.text.slice(0, -1).split(' ');
+        const typehint = activeLineTokens[activeLineTokens.indexOf(selectedWord) - 1];
+        
+        if (typehint !== 'public' && typehint !== 'private' && typehint !== 'protected') {
+            property.setType(typehint);
+        }
 
         property.indentation = activeLine.text.substring(0, activeLine.firstNonWhitespaceCharacterIndex);
 
