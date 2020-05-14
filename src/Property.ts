@@ -105,7 +105,10 @@ export default class Property {
     }
 
     generateMethodName(prefix : string) : string {
-        return prefix + this.name.charAt(0).toUpperCase() + this.name.substring(1);
+        let name = this.name.split('_')
+            .map(str => str.charAt(0).toLocaleUpperCase() + str.slice(1))
+            .join('');
+        return prefix + name;
     }
 
     getDescription() : string {
